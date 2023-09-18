@@ -2,6 +2,8 @@
 #include <cstdlib>
 #include <cstdio>
 #include <curl/curl.h>
+#include <bits/stdc++.h>
+
 
 using namespace std;
 
@@ -12,7 +14,8 @@ class Converter{
         Converter();
         void setUrl(const string& url);
         string downloadURL();
-        void parser(string parseString);
+        void loadStr(string str);
+        char* htmlCStr;
 
     private:
         CURL* curl;
@@ -42,8 +45,15 @@ void Converter::setUrl(const string& url) {
     this->url = url;
 }
 
-void Converter::parser(string parseString){
-    cout << parseString;
+//load parseString into cstring
+void Converter::loadStr(string str){
+    
+
+    
+    htmlCStr = new char[str.length() + 1];
+    strcpy(htmlCStr, str.c_str());
+
+    printf("%s\n",htmlCStr);
 }
 
 string Converter::downloadURL(){
@@ -64,7 +74,7 @@ string Converter::downloadURL(){
 
     
     printf("CURL RESP CODE: %d\n",responseCode);
-    printf("%s\n",htmlResponse.c_str());
+    
     return htmlResponse;
 }
 
@@ -80,10 +90,10 @@ int main(int argc, char *argv[]){
     //set url for converter
     converter.setUrl(argv[1]);
     
-    converter.parser("hi");
+    //convert to cstr and load into mem
+    converter.loadStr(converter.downloadURL());
 
 
-    
-    converter.downloadURL();
+
     return 0;
 }
