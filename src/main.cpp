@@ -11,7 +11,8 @@ class Converter{
     public:
         Converter();
         void setUrl(const string& url);
-        string downloadURL() const;
+        string downloadURL();
+        void parser(string parseString);
 
     private:
         CURL* curl;
@@ -21,6 +22,11 @@ class Converter{
 
 };
 
+//appends libcurls recv data to resp, reccomended from docs
+size_t Converter::WriteCallback(void* contents, size_t size, size_t nmemb, void* userp) {
+    ((string*)userp)->append((char*)contents, size * nmemb);
+    return size * nmemb;
+}
 //init curl
 Converter::Converter(){
     curl = curl_easy_init();
@@ -36,14 +42,11 @@ void Converter::setUrl(const string& url) {
     this->url = url;
 }
 
-//appends libcurls recv data to resp, reccomended from docs
-size_t Converter::WriteCallback(void* contents, size_t size, size_t nmemb, void* userp) {
-    ((string*)userp)->append((char*)contents, size * nmemb);
-    return size * nmemb;
+void Converter::parser(string parseString){
+    cout << parseString;
 }
 
-
-string Converter::downloadURL() const{
+string Converter::downloadURL(){
     printf("%s\n", url.c_str());
     CURLcode responseCode;
     string htmlResponse;
@@ -60,8 +63,8 @@ string Converter::downloadURL() const{
     responseCode = curl_easy_perform(curl);
 
     
-    cout <<  "CURL RESP CODE: " << responseCode << endl;
-    cout << htmlResponse << endl;
+    printf("CURL RESP CODE: %d\n",responseCode);
+    printf("%s\n",htmlResponse.c_str());
     return htmlResponse;
 }
 
@@ -77,7 +80,7 @@ int main(int argc, char *argv[]){
     //set url for converter
     converter.setUrl(argv[1]);
     
-    
+    converter.parser("hi");
 
 
     
