@@ -15,6 +15,7 @@ class Converter{
         void setUrl(const string& url);
         string downloadURL();
         void loadStr(string str);
+        int checkForClosingTag(int index);
         char* htmlCStr;
 
     private:
@@ -41,19 +42,59 @@ Converter::Converter(){
 
 }
 
+int Converter::checkForClosingTag(int index){
+    
+    while(htmlCStr[index] != '\0'){
+        char currentChar = htmlCStr[index];
+        cout << currentChar;
+        if(currentChar == '<'){
+            if (htmlCStr[index + 1] == '/') {
+                int j = index;
+                //get end of closing tag
+                while(htmlCStr[j] != '>' && htmlCStr[j] != '\0'){
+                    cout << htmlCStr[j];
+                    j++;
+                }
+                if(htmlCStr[j] == '\0'){
+                    //prevent seg faults
+                    break;
+                }
+                cout << '>' << endl;
+                break;
+                index = j + 1;
+            }
+        }
+        
+        
+        
+        
+        index++;
+        
+
+    }
+    
+    return index;
+}
+
 void Converter::setUrl(const string& url) {
     this->url = url;
 }
 
-//load parseString into cstring
+//load string into cstring
 void Converter::loadStr(string str){
-    
 
-    
-    htmlCStr = new char[str.length() + 1];
+    int stringLen = str.length() + 1;
+    htmlCStr = new char[stringLen];
     strcpy(htmlCStr, str.c_str());
 
-    printf("%s\n",htmlCStr);
+    //printf("%s\n",htmlCStr);
+    for (int i = 0; i < stringLen; i++){
+        
+        if(htmlCStr[i] == '<'){
+            cout << htmlCStr[i];
+            checkForClosingTag(i+1);
+        }
+    }
 }
 
 string Converter::downloadURL(){
