@@ -1,13 +1,14 @@
 CC = g++
 CFLAGS = -Wall -Wextra -Werror
-LDFLAGS = -lcurl
+LDFLAGS = -lcurl 
 TARGET = bin/main
+INCLUDE = -Iinclude/htmlcxx
 SRC = src/main.cpp
 
 all: $(TARGET)
 
 $(TARGET): $(SRC)
-	$(CC) $(CFLAGS) $(SRC) $(LDFLAGS) -o $(TARGET)
+	$(CC) $(CFLAGS) $(INCLUDE) $(SRC) $(LDFLAGS) -o $(TARGET)
 
 clean:
 	rm -f $(TARGET)
