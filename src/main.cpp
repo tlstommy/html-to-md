@@ -45,11 +45,26 @@ Converter::Converter(){
 }
 
 string Converter::parseHTML(string str, int& cursor_pos){
+    string parsed;
+    char currentChar;
     while(cursor_pos < htmlCStrLen){
-        printf("%c",str[cursor_pos]);
+        currentChar = str[cursor_pos];
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        parsed += currentChar;
         cursor_pos++;
     }
-    return str;
+    return parsed;
 }
 
 void Converter::setUrl(const string& url) {
@@ -107,7 +122,7 @@ int main(int argc, char *argv[]){
     //start at pos 0
     string markdownString = converter.parseHTML(converter.htmlCStr,cursor_pos);
 
-    //cout << markdownString << endl;
+    cout << markdownString << endl;
 
     return 0;
 }
