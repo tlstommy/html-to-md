@@ -1,6 +1,7 @@
 #include <iostream>
 #include <cstdlib>
 #include <cstdio>
+#include <string>
 #include <curl/curl.h>
 #include <bits/stdc++.h>
 
@@ -15,8 +16,9 @@ class Converter{
         void setUrl(const string& url);
         string downloadURL();
         void loadStr(string str);
-        int checkForClosingTag(int index);
+        string parseHTML(string str, int& cursor_pos);
         char* htmlCStr;
+        int htmlCStrLen;
 
     private:
         CURL* curl;
@@ -42,38 +44,12 @@ Converter::Converter(){
 
 }
 
-int Converter::checkForClosingTag(int index){
-    
-    while(htmlCStr[index] != '\0'){
-        char currentChar = htmlCStr[index];
-        cout << currentChar;
-        if(currentChar == '<'){
-            if (htmlCStr[index + 1] == '/') {
-                int j = index;
-                //get end of closing tag
-                while(htmlCStr[j] != '>' && htmlCStr[j] != '\0'){
-                    cout << htmlCStr[j];
-                    j++;
-                }
-                if(htmlCStr[j] == '\0'){
-                    //prevent seg faults
-                    break;
-                }
-                cout << '>' << endl;
-                break;
-                index = j + 1;
-            }
-        }
-        
-        
-        
-        
-        index++;
-        
-
+string Converter::parseHTML(string str, int& cursor_pos){
+    while(cursor_pos < htmlCStrLen){
+        printf("%c",str[cursor_pos]);
+        cursor_pos++;
     }
-    
-    return index;
+    return str;
 }
 
 void Converter::setUrl(const string& url) {
@@ -84,17 +60,9 @@ void Converter::setUrl(const string& url) {
 void Converter::loadStr(string str){
 
     int stringLen = str.length() + 1;
+    htmlCStrLen = stringLen;
     htmlCStr = new char[stringLen];
     strcpy(htmlCStr, str.c_str());
-
-    //printf("%s\n",htmlCStr);
-    for (int i = 0; i < stringLen; i++){
-        
-        if(htmlCStr[i] == '<'){
-            cout << htmlCStr[i];
-            checkForClosingTag(i+1);
-        }
-    }
 }
 
 string Converter::downloadURL(){
@@ -134,7 +102,12 @@ int main(int argc, char *argv[]){
     //convert to cstr and load into mem
     converter.loadStr(converter.downloadURL());
 
+    int cursor_pos = 0;
 
+    //start at pos 0
+    string markdownString = converter.parseHTML(converter.htmlCStr,cursor_pos);
+
+    //cout << markdownString << endl;
 
     return 0;
 }
