@@ -36,6 +36,7 @@ class Converter{
         string parseHR(const string& str, size_t& cursorPos, int tagLen);
         string parseI(const string& str, size_t& cursorPos, int tagLen);
         string parseP(const string& str, size_t& cursorPos, int tagLen);
+        string parseB(const string& str, size_t& cursorPos, int tagLen);
 
 
         string getTagContents(const string& str, size_t& cursorPos,string closingTag);
@@ -67,7 +68,9 @@ Converter::Converter(){
         {"<h1>", [this](const string& str, size_t& pos) { return this->parseHeaderOne(str, pos,4); }},
         {"<h2>", [this](const string& str, size_t& pos) { return this->parseHeaderTwo(str, pos,4); }},
         {"<hr>", [this](const string& str, size_t& pos) { return this->parseHR(str, pos,4); }},
-        {"<i>", [this](const string& str, size_t& pos) { return this->parseI(str, pos,3); }}
+        {"<i>", [this](const string& str, size_t& pos) { return this->parseI(str, pos,3); }},
+        {"<b>", [this](const string& str, size_t& pos) { return this->parseB(str, pos,3); }}
+
     };
 
     if (!curl) {
@@ -103,11 +106,22 @@ string Converter::parseHR(const string& str, size_t& cursorPos,int tagLength) {
 string Converter::parseI(const string& str, size_t& cursorPos,int tagLength) {
     string parsedString;
 
-    parsedString = "* ";
+    parsedString = "*";
     cursorPos += 3;
     parsedString = parsedString + getTagContents(str,cursorPos,"</i>");
 
     parsedString += "*";
+    return parsedString;
+}
+
+string Converter::parseB(const string& str, size_t& cursorPos,int tagLength) {
+    string parsedString;
+
+    parsedString = "**";
+    cursorPos += 3;
+    parsedString = parsedString + getTagContents(str,cursorPos,"</b>");
+
+    parsedString += "**";
     return parsedString;
 }
 
