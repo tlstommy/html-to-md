@@ -1,5 +1,5 @@
 CC = g++
-CFLAGS = -Wall -Wextra -Werror
+CFLAGS = -Wall -Wextra 
 LDFLAGS = -lcurl 
 TARGET = bin/main
 SRC = src/main.cpp
