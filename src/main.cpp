@@ -101,11 +101,11 @@ string Converter::parseHR(const string& str, size_t& cursorPos,int tagLength) {
 string Converter::parseI(const string& str, size_t& cursorPos,int tagLength) {
     string parsedString;
 
-    parsedString = "*";
+    parsedString = "* ";
     cursorPos += 3;
     parsedString = parsedString + getTagContents(str,cursorPos,"</i>");
 
-    parsedString += "*";
+    parsedString += " *";
     return parsedString;
 }
 
