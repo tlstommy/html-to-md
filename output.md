@@ -1,5 +1,6 @@
 
 # CS202 Lecture notes -- Vectors of Vectors
+
 <LI><a href=http://web.eecs.utk.edu/~jplank>James S. Plank</a>
 <LI>Directory: <b>~jplank/cs202/notes/Vectors-of-Vectors</b>
 <LI>Lecture notes:

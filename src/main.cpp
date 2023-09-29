@@ -84,7 +84,7 @@ string Converter::parseHeaderOne(const string& str, size_t& cursorPos,int tagLen
     parsedString = "# ";
     cursorPos += 4;
     parsedString = parsedString + getTagContents(str,cursorPos,"</h1>");
-    
+    parsedString += "\n";
     return parsedString;
 }
 
