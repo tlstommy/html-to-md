@@ -32,8 +32,11 @@ class Converter{
         //tag parsing funcs
         string parseHeaderOne(const string& str, size_t& cursorPos,int tagLen);
         string parseHeaderTwo(const string& str, size_t& cursorPos,int tagLen);
-        string parseHR(const string& str, size_t& cursorPos,int tagLen);
+        string parseHR(const string& str, size_t& cursorPos, int tagLen);
+        string parseI(const string& str, size_t& cursorPos, int tagLen);
 
+
+        string getTagContents(const string& str, size_t& cursorPos,string closingTag);
 
 
         void writeFile(string markdownStr);
@@ -61,7 +64,8 @@ Converter::Converter(){
     tagMap = {
         {"<h1>", [this](const string& str, size_t& pos) { return this->parseHeaderOne(str, pos,4); }},
         {"<h2>", [this](const string& str, size_t& pos) { return this->parseHeaderTwo(str, pos,4); }},
-        {"<hr>", [this](const string& str, size_t& pos) { return this->parseHR(str, pos,4); }}
+        {"<hr>", [this](const string& str, size_t& pos) { return this->parseHR(str, pos,4); }},
+        {"<i>", [this](const string& str, size_t& pos) { return this->parseI(str, pos,3); }}
     };
 
     if (!curl) {
@@ -74,9 +78,13 @@ Converter::Converter(){
 
 
 string Converter::parseHeaderOne(const string& str, size_t& cursorPos,int tagLength) {
-    
+    string parsedString;
+
+    parsedString = "# ";
     cursorPos += 4;
-    return "# ";
+    parsedString = parsedString + getTagContents(str,cursorPos,"</h1>");
+    
+    return parsedString;
 }
 
 string Converter::parseHeaderTwo(const string& str, size_t& cursorPos,int tagLength) {
@@ -88,6 +96,42 @@ string Converter::parseHeaderTwo(const string& str, size_t& cursorPos,int tagLen
 string Converter::parseHR(const string& str, size_t& cursorPos,int tagLength) {
     cursorPos += 4;
     return "---";
+}
+
+string Converter::parseI(const string& str, size_t& cursorPos,int tagLength) {
+    string parsedString;
+
+    parsedString = "*";
+    cursorPos += 3;
+    parsedString = parsedString + getTagContents(str,cursorPos,"</i>");
+
+    parsedString += "*";
+    return parsedString;
+}
+
+string Converter::getTagContents(const string& str, size_t& cursorPos,string closingTag){
+    string contents;
+    size_t closingTagIndex;
+
+
+    closingTagIndex = str.find(closingTag,cursorPos);
+    
+    if(closingTagIndex == string::npos){
+        closingTagIndex = str.find("\n",cursorPos);
+        if(closingTagIndex == string::npos) {
+            cerr << "Error: Neither closing tag nor newline found." << endl;
+            return "";
+        }
+    }
+
+    while(cursorPos != closingTagIndex ){
+        contents += str[cursorPos];
+        cursorPos++;
+    }
+
+    cursorPos += closingTag.size();
+
+    return contents;
 }
 
 string Converter::parseHTML(string str, size_t& cursorPos){

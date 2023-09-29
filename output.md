@@ -1,14 +1,14 @@
 
-# CS202 Lecture notes -- Vectors of Vectors</h1>
+# CS202 Lecture notes -- Vectors of Vectors
 <LI><a href=http://web.eecs.utk.edu/~jplank>James S. Plank</a>
 <LI>Directory: <b>~jplank/cs202/notes/Vectors-of-Vectors</b>
 <LI>Lecture notes:
     <a href=http://web.eecs.utk.edu/~jplank/plank/classes/cs202/Notes/Vectors-of-Vectors>
     <b>http://web.eecs.utk.edu/~jplank/plank/classes/cs202/Notes/Vectors-of-Vectors</b></a>
 <LI> Original Notes: 2011 or so.
-<LI> Last modification date: <i>
+<LI> Last modification date: *
 Sat Aug 28 16:03:19 EDT 2021
-</i>
+*
 ---
 
 Interestingly, vectors of strings don't seem to give students problems; however
@@ -21,15 +21,15 @@ I will illustrate with the program
 <b><a href=src/vdm.cpp>src/vdm.cpp</a></b>.
 <p>
 
-This program takes three command line arguments: <i>r</i>, <i>c</i> and <i>p</i>.
+This program takes three command line arguments: *r*, *c* and *p*.
 It then creates a <b>r * c</b> "Vandermonde" matrix over the field defined by the
-prime number <i>p</i>?  What's a "field?"   In this case, it is the numbers 0 through <i>p-1</i>,
-where addition, subtraction and multiplication are all modulo <i>p</i>.  Division 
+prime number *p*?  What's a "field?"   In this case, it is the numbers 0 through *p-1*,
+where addition, subtraction and multiplication are all modulo *p*.  Division 
 is defined to be the inverse of multiplication, but don't worry about it, since it doesn't
 really matter in this lecture.
 <p>
-A <i>Vandermonde</i> matrix is one that has the value <i>(i+1)<sup>j</sup>, mod p</i> in row <i>i</i> and
-column <i>j</i> (everything is zero-indexed).  It has some very special properties concerning
+A *Vandermonde* matrix is one that has the value *(i+1)<sup>j</sup>, mod p* in row *i* and
+column *j* (everything is zero-indexed).  It has some very special properties concerning
 invertibility of submatrices, but again, we don't care too much -- we just want to create
 one and print it.  First, so you understand a Vandermonde matrix, here is one with five rows,
 three columns and a prime of 17:
@@ -129,9 +129,9 @@ our matrix has <b>r*c</b> element.
 
 <p>
 Next, we set the elements by running through each row, and setting
-<b>base</b> to <i>(i+1)</i> and <b>val</b> to one.  Now we calculate
-<i>(i+1)<sup>j</sup>%p</i> by multiplying the previous element, which
-is <i>(i+1)<sup>(j-1)</sup>%p</i> by <i>(i+1)</i>.  
+<b>base</b> to *(i+1)* and <b>val</b> to one.  Now we calculate
+*(i+1)<sup>j</sup>%p* by multiplying the previous element, which
+is *(i+1)<sup>(j-1)</sup>%p* by *(i+1)*.  
 When we're done, we have an <b>r * c</b>
 Vandermonde matrix.  The second set of <b>for</b> loops prints it out. 
 
@@ -165,18 +165,18 @@ as pictured below:
 
 <p><center><table border=3><td><img src=img/Pascals-Triangle-1.jpg width=400></td></table></center><p>
 
-The numbers are arranged in rows, where row <i>i</i> has <i>i+1</i> elements (as always, our
+The numbers are arranged in rows, where row *i* has *i+1* elements (as always, our
 lives are zero-indexed).  The first and last element in each row is equal to one.  
 Each other element is the sum of the two elements above it.  Suppose we want to write
 a program to generate Pascal's triangle in a data structure.  One easy way to do 
-this is to generate it as a vector of integer vectors, where element <i>i</i> of the
-vector is a vector containing the elements of row <i>i</i>.  We can visualize it below:
+this is to generate it as a vector of integer vectors, where element *i* of the
+vector is a vector containing the elements of row *i*.  We can visualize it below:
 
 <p><center><table border=3><td><img src=img/Pascals-Triangle-2.jpg width=420></td></table></center><p>
 
-Scanning for a pattern, let's consider the <i>j</i>-th element in row <i>i</i>.  
+Scanning for a pattern, let's consider the *j*-th element in row *i*.  
 If it is the first or last element in the row, it will equal one.  Otherwise, you can 
-see from the picture that it is equal to the sum of elements <i>j-1</i> and <i>j</i> in row <i>i-1</i>. 
+see from the picture that it is equal to the sum of elements *j-1* and *j* in row *i-1*. 
 That gives us a nice way to construct the triangle.  The code is in 
 <b><a href=src/pascal.cpp>src/pascal.cpp</a></b>:
 
