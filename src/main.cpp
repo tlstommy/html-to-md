@@ -228,7 +228,7 @@ void Converter::loadStr(string str){
     regex pattern(R"i((<p>|<UL>|</UL>))i"); 
     str = regex_replace(str,pattern,"");
 
-    int stringLen = str.length() + 1;
+    int stringLen = str.length();
     htmlCStrLen = stringLen;
     htmlCStr = new char[stringLen];
     strcpy(htmlCStr, str.c_str());
@@ -259,8 +259,8 @@ string Converter::downloadURL(){
 
 void Converter::writeFile(string markdownStr){
     ofstream outfile;
-    outfile.open("output.md");
-    outfile << markdownStr << endl;
+    outfile.open("output.markdown");
+    outfile << markdownStr;
     outfile.close();
 }
 
@@ -292,7 +292,7 @@ int main(int argc, char *argv[]){
     //start at pos 0
     string markdownString = converter.parseHTML(converter.htmlCStr,cursorPos);
 
-    converter.writeFile(markdownString + "\n\0");
+    converter.writeFile(markdownString);
     cout << markdownString << endl;
 
     return 0;

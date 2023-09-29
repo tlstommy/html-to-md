@@ -16,3 +16,4 @@ Wed Sep 11 14:52:56 EDT 2019
 There used to be lecture notes here.  However, what we do now is use
 the
 <a href=http://web.eecs.utk.edu/~jplank/plank/classes/cs302/Notes/Bits/>CS302 Lectures Notes On Bit Operations</a>, but stop when we reach the section entitled "Common things that we do with bit operations".
+
