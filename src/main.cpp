@@ -259,7 +259,7 @@ string Converter::downloadURL(){
 
 void Converter::writeFile(string markdownStr){
     ofstream outfile;
-    outfile.open("output.markdown");
+    outfile.open("output.md");
     outfile << markdownStr;
     outfile.close();
 }
