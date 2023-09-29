@@ -34,6 +34,7 @@ class Converter{
         string parseHeaderTwo(const string& str, size_t& cursorPos,int tagLen);
         string parseHR(const string& str, size_t& cursorPos, int tagLen);
         string parseI(const string& str, size_t& cursorPos, int tagLen);
+        string parseP(const string& str, size_t& cursorPos, int tagLen);
 
 
         string getTagContents(const string& str, size_t& cursorPos,string closingTag);
@@ -105,7 +106,18 @@ string Converter::parseI(const string& str, size_t& cursorPos,int tagLength) {
     cursorPos += 3;
     parsedString = parsedString + getTagContents(str,cursorPos,"</i>");
 
-    parsedString += " *";
+    parsedString += "*";
+    return parsedString;
+}
+
+string Converter::parseP(const string& str, size_t& cursorPos,int tagLength) {
+    string parsedString;
+
+    parsedString = "";
+    cursorPos += 3;
+    parsedString = parsedString + getTagContents(str,cursorPos,"</p>");
+
+    parsedString += "";
     return parsedString;
 }
 
