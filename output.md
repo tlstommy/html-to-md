@@ -15,12 +15,12 @@ Sat Aug 28 16:03:19 EDT 2021
 Interestingly, vectors of strings don't seem to give students problems; however
 vectors of vectors do, and the two are really not fundamentally different.  This
 lecture gives you some practice with vectors of vectors.
-<p>
+
 Let's suppose that I want to represent a matrix of integers in 
 C++.  The best way to do that is to use a vector of integer vectors.  
 I will illustrate with the program
 <b><a href=src/vdm.cpp>src/vdm.cpp</a></b>.
-<p>
+
 
 This program takes three command line arguments: * r*, * c* and * p*.
 It then creates a <b>r * c</b> "Vandermonde" matrix over the field defined by the
@@ -28,14 +28,14 @@ prime number * p*?  What's a "field?"   In this case, it is the numbers 0 throug
 where addition, subtraction and multiplication are all modulo * p*.  Division 
 is defined to be the inverse of multiplication, but don't worry about it, since it doesn't
 really matter in this lecture.
-<p>
+
 A * Vandermonde* matrix is one that has the value * (i+1)<sup>j</sup>, mod p* in row * i* and
 column * j* (everything is zero-indexed).  It has some very special properties concerning
 invertibility of submatrices, but again, we don't care too much -- we just want to create
 one and print it.  First, so you understand a Vandermonde matrix, here is one with five rows,
 three columns and a prime of 17:
 
-<p><center><table border=3 cellpadding=3><td><pre>
+<center><table border=3 cellpadding=3><td><pre>
          Col  Col  Col
           0    1    2
          ---  ---  ---  
@@ -44,15 +44,15 @@ Row 1 |   1    2    4
 Row 2 |   1    3    9   
 Row 3 |   1    4   16   
 Row 4 |   1    5    8   
-</pre></td></table></center><p>
+</pre></td></table></center>
 
 As you can see, the only time we had to do the modulo operator was for the element in row 4,
 column 2.  That one is equal to 5<sup>2</sup>, which equals
 25, but we take it modulo 17, so it eight.
-<p>
+
 Take a look at the code:
 
-<p><center><table border=3 cellpadding=3><td><pre>
+<center><table border=3 cellpadding=3><td><pre>
 <font color=blue>/* This program creates and prints a "Vandermonde" matrix.
    The user will enter a number of rows, a number of columns, and a prime number, p.
    The Vandermonde matrix element in row i, column j is equal to (i+1)^j, mod p.
@@ -109,26 +109,26 @@ int main(int argc, char **argv)
 
   return 0;
 }
-</pre></td></table></center><p>
+</pre></td></table></center>
 
 
 To start with, take a look at the way I declare the vector of vectors:
 
-<p><center><table border=3 cellpadding=3><td><pre>
+<center><table border=3 cellpadding=3><td><pre>
   vector &lt; vector &lt;int&gt; &gt; vdm;       <font color=blue>// The Vandermonde matrix</font>
-</pre></td></table></center><p>
+</pre></td></table></center>
 
 It's a good idea to separate the &gt;'s and &lt;'s with a space.  On some copilers, "&gt;&gt;"
 is interpreted as a keyword (like with <b>cin</b>) and you'll get a compiler error if you omit
 the space.  Other compilers are ok with no space -- since you never know, it's best to be safe
 and keep the space.  I will always have the space.
 
-<p>
+
 We start by resizing <b>vdm</b> to be the number of rows.  When we do that, each vector element 
 is an empty vector.  We go through each of these and resize it to be the number of columns.  Now
 our matrix has <b>r*c</b> element.
 
-<p>
+
 Next, we set the elements by running through each row, and setting
 <b>base</b> to * (i+1)* and <b>val</b> to one.  Now we calculate
 * (i+1)<sup>j</sup>%p* by multiplying the previous element, which
@@ -156,7 +156,7 @@ UNIX> <font color=darkred><b></b></font>
 
 You should be able to verify to yourselves that all of the above matrices are Vandermonde matrices 
 in their given fields.
-<p>
+
 ---
 <h3>Vectors of Vectors don't have to represent rectangular matrices</h3>
 
@@ -164,7 +164,7 @@ There's nothing that says we have to make each of the sub-vectors the same size.
 For example, consider Pascal's triangle.  This is a triangle of numbers
 as pictured below:
 
-<p><center><table border=3><td><img src=img/Pascals-Triangle-1.jpg width=400></td></table></center><p>
+<center><table border=3><td><img src=img/Pascals-Triangle-1.jpg width=400></td></table></center>
 
 The numbers are arranged in rows, where row * i* has * i+1* elements (as always, our
 lives are zero-indexed).  The first and last element in each row is equal to one.  
@@ -173,7 +173,7 @@ a program to generate Pascal's triangle in a data structure.  One easy way to do
 this is to generate it as a vector of integer vectors, where element * i* of the
 vector is a vector containing the elements of row * i*.  We can visualize it below:
 
-<p><center><table border=3><td><img src=img/Pascals-Triangle-2.jpg width=420></td></table></center><p>
+<center><table border=3><td><img src=img/Pascals-Triangle-2.jpg width=420></td></table></center>
 
 Scanning for a pattern, let's consider the * j*-th element in row * i*.  
 If it is the first or last element in the row, it will equal one.  Otherwise, you can 
@@ -181,7 +181,7 @@ see from the picture that it is equal to the sum of elements * j-1* and * j* in 
 That gives us a nice way to construct the triangle.  The code is in 
 <b><a href=src/pascal.cpp>src/pascal.cpp</a></b>:
 
-<p><center><table border=3 cellpadding=3><td><pre>
+<center><table border=3 cellpadding=3><td><pre>
 <font color=blue>/* This program creates Pascal's triangle and prints it out.
    It stores Pascal's triangle as a vector of vectors. */</font>
 
@@ -228,7 +228,7 @@ int main(int argc, char **argv)
 
   return 0;
 }
-</pre></td></table></center><p>
+</pre></td></table></center>
 
 When we run it, it's pictured a little differently than above, but you should
 see that it is clearly the same triangle:
@@ -255,14 +255,14 @@ C++ has default methods for making copies of data structures.  In
 <b><a href=src/vcopy.cpp>src/vcopy.cpp</a></b>, we add a second vector of vectors
 to the Pascal program.  
 
-<p><center><table border=3 cellpadding=3><td><pre>
+<center><table border=3 cellpadding=3><td><pre>
   vector &lt; vector &lt;int&gt; &gt; negative_pascal; <font color=blue>// This will be a copy, and we'll negate the elements.</font>
-</pre></td></table></center><p>
+</pre></td></table></center>
 
 At the end of the program, before we print anything out, we make a copy of <b>pascal</b>, 
 and then we run through it and negate all of the elements:
 
-<p><center><table border=3 cellpadding=3><td><pre>
+<center><table border=3 cellpadding=3><td><pre>
   <font color=blue>/* Make a copy of pascal. */</font>
 
   negative_pascal = pascal;
@@ -274,7 +274,7 @@ and then we run through it and negate all of the elements:
       negative_pascal[i][j] = -negative_pascal[i][j];
     }
   }
-</pre></td></table></center><p>
+</pre></td></table></center>
   
 And we print both of them:
 
@@ -301,15 +301,15 @@ UNIX>
 This is nothing exciting, really, but I want to highlight how easy it was to copy
 that vector of vectors.  One line:
 
-<p><center><table border=3 cellpadding=3><td><pre>
+<center><table border=3 cellpadding=3><td><pre>
 negative_pascal = pascal;
-</pre></td></table></center><p>
+</pre></td></table></center>
   
 This is blessing and a curse.  It's a blessing, because it's a lot easier than
 creating <b>negative_pascal</b> with loops and <b>push_back</b> commands.  It's a curse,
 because you can burn megabytes of memory with a single line of code, and poor management
 of memory is a speed and resource killer of computers.
-<p>
+
 So I want to you pay attention to when you make copies of things, because it is in fact
 so easy!
  

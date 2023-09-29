@@ -8,6 +8,7 @@
 #include <bits/stdc++.h>
 #include <iostream>
 #include <fstream>
+#include <regex>
 
 
 using namespace std;
@@ -196,6 +197,9 @@ void Converter::loadStr(string str){
     
     cleanHTML(str,"<title>","</title>");
     cleanHTML(str,"<body","\n");
+
+    regex pattern("<p>");
+    str = regex_replace(str,pattern,"");
 
     int stringLen = str.length() + 1;
     htmlCStrLen = stringLen;
