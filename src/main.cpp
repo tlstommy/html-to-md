@@ -260,7 +260,7 @@ string Converter::downloadURL(){
 void Converter::writeFile(string markdownStr){
     ofstream outfile;
     outfile.open("output.md");
-    outfile << markdownStr;
+    outfile << markdownStr << endl;
     outfile.close();
 }
 
@@ -292,7 +292,7 @@ int main(int argc, char *argv[]){
     //start at pos 0
     string markdownString = converter.parseHTML(converter.htmlCStr,cursorPos);
 
-    converter.writeFile(markdownString + "\n");
+    converter.writeFile(markdownString + "\n\0");
     cout << markdownString << endl;
 
     return 0;
