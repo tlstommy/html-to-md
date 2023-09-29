@@ -37,6 +37,7 @@ class Converter{
         string parseI(const string& str, size_t& cursorPos, int tagLen);
         string parseP(const string& str, size_t& cursorPos, int tagLen);
         string parseB(const string& str, size_t& cursorPos, int tagLen);
+        string parseLI(const string& str, size_t& cursorPos, int tagLen);
 
 
         string getTagContents(const string& str, size_t& cursorPos,string closingTag);
@@ -69,7 +70,8 @@ Converter::Converter(){
         {"<h2>", [this](const string& str, size_t& pos) { return this->parseHeaderTwo(str, pos,4); }},
         {"<hr>", [this](const string& str, size_t& pos) { return this->parseHR(str, pos,4); }},
         {"<i>", [this](const string& str, size_t& pos) { return this->parseI(str, pos,3); }},
-        {"<b>", [this](const string& str, size_t& pos) { return this->parseB(str, pos,3); }}
+        {"<b>", [this](const string& str, size_t& pos) { return this->parseB(str, pos,3); }},
+        {"<LI>", [this](const string& str, size_t& pos) { return this->parseLI(str, pos,4); }}
 
     };
 
@@ -133,6 +135,17 @@ string Converter::parseP(const string& str, size_t& cursorPos,int tagLength) {
     parsedString = parsedString + getTagContents(str,cursorPos,"</p>");
 
     parsedString += "";
+    return parsedString;
+}
+
+string Converter::parseLI(const string& str, size_t& cursorPos,int tagLength) {
+    string parsedString;
+
+    parsedString = "- ";
+    cursorPos += 4;
+    parsedString = parsedString + getTagContents(str,cursorPos,"\n");
+
+    parsedString += "\n";
     return parsedString;
 }
 
@@ -212,7 +225,7 @@ void Converter::loadStr(string str){
     cleanHTML(str,"<title>","</title>");
     cleanHTML(str,"<body","\n");
 
-    regex pattern("<p>");
+    regex pattern(R"i((<p>|<UL>|</UL>))i"); 
     str = regex_replace(str,pattern,"");
 
     int stringLen = str.length() + 1;
